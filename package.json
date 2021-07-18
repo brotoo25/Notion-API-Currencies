@@ -1,0 +1,17 @@
+{
+  "name": "currency_integration",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@notionhq/client": "^0.2.1",
+    "axios": "^0.21.1",
+    "dotenv": "^10.0.0"
+  },
+  "scripts": {
+    "start": "node index"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
