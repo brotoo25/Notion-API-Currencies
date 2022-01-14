@@ -2,6 +2,12 @@ const axios = require('axios');
 const dotenv = require('dotenv').config()
 const { Client } = require('@notionhq/client')
 
+const axiosClient = axios.create({
+  timeout: 160000,
+  maxContentLength: 500 * 1000 * 1000,
+  httpsAgent: new https.Agent({ keepAlive: true }),
+})
+
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
 })
@@ -59,7 +65,7 @@ async function _updateNotionTable(pageId, monetaryValue) {
  **/
  async function fetchPriceOnCoinGecko(coin, defaultCurrency) {
   try {
-    const response = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=${defaultCurrency}`);
+    const response = await axiosClient.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=${defaultCurrency}`);
     return response.data[`${coin}`][defaultCurrency.toLowerCase()]
   } catch (error) {
     console.error(error);
@@ -79,7 +85,7 @@ async function fetchCurrencyPrice(from, to) {
       return 1
     }
 
-    const response = await axios.get(`https://economia.awesomeapi.com.br/json/last/${from.toUpperCase()}-${to}`);
+    const response = await axiosClient.get(`https://economia.awesomeapi.com.br/json/last/${from.toUpperCase()}-${to}`);
     return response.data[`${from}${to}`]['high']
   } catch (error) {
     console.error(error);
