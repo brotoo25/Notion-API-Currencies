@@ -1,4 +1,5 @@
-const axios = require('axios');
+const axios = require('axios')
+const cron = require('node-cron')
 const dotenv = require('dotenv').config()
 const { Client } = require('@notionhq/client')
 
@@ -86,4 +87,7 @@ async function fetchCurrencyPrice(from, to) {
   }
 }
 
-refreshDatabase()
+// Run the refresh every minute
+cron.schedule('*/30 * * * *', () => {
+  refreshDatabase()
+})
