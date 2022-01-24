@@ -11,11 +11,6 @@ on:
       - docker-remote
   workflow_dispatch:
 
-env:
-  NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-  NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
-  NOTION_DEFAULT_CURRENCY: ${{ secrets.NOTION_DEFAULT_CURRENCY }}
-
 jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
@@ -47,9 +42,15 @@ jobs:
     steps:
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
+      env:
+        NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+        NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+        NOTION_DEFAULT_CURRENCY: ${{ secrets.NOTION_DEFAULT_CURRENCY }}
       with:
         host: ${{ secrets.LINODE_HOST }}
         username: ${{ secrets.LINODE_USERNAME }}
         password: ${{ secrets.LINODE_PASSWORD }}
         port: ${{ secrets.LINODE_PORT }}
-        script: bash updateapp.sh ${NOTION_TOKEN} ${NOTION_DATABASE_ID} ${NOTION_DEFAULT_CURRENCY}
+        envs: NOTION_TOKEN,NOTION_DATABASE_ID,NOTION_DEFAULT_CURRENCY
+        script: bash updateapp.sh $NOTION_TOKEN $NOTION_DATABASE_ID $NOTION_DEFAULT_CURRENCY
+          

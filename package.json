@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@notionhq/client": "^0.2.1",
+    "@notionhq/client": "^0.4.12",
     "axios": "^0.21.1",
     "node-cron": "^3.0.0"
   },
