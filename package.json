@@ -6,7 +6,6 @@
   "dependencies": {
     "@notionhq/client": "^0.2.1",
     "axios": "^0.21.1",
-    "dotenv": "^10.0.0",
     "node-cron": "^3.0.0"
   },
   "scripts": {
