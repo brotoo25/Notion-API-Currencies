@@ -7,7 +7,7 @@ const notion = new Client({
 })
 
 const databaseId = process.env.NOTION_DATABASE_ID
-const defaultCurrency = process.env.DEFAULT_CURRENCY
+const defaultCurrency = process.env.NOTION_DEFAULT_CURRENCY
 
 const refreshDatabase = async () => {
   const payload = {
@@ -86,7 +86,10 @@ async function fetchCurrencyPrice(from, to) {
   }
 }
 
-// Run the refresh every minute
+// Initial refresh of database
+refreshDatabase()
+
+// Run refresh every 30 minutes
 cron.schedule('*/30 * * * *', () => {
   refreshDatabase()
 })
