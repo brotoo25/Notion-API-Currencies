@@ -5,10 +5,11 @@
 
 name: Publish Docker image
 
-on:
+on: 
   push:
     branches:
       - docker-remote
+  workflow_dispatch:
 
 jobs:
   push_to_registry:
@@ -39,18 +40,6 @@ jobs:
     name: Running comands on Linode
     runs-on: ubuntu-latest
     steps:
-    - name: Check out the repo
-      uses: actions/checkout@v2
-
-    - name: Check where files are being checked out
-      run: echo $PWD
-
-    - name: List Folder content
-      run: ls
-
-    - name: Give shellscript run permission
-      run: chmod +x updateapp.sh
-
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
       with:
